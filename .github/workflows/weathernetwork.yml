@@ -25,4 +25,16 @@ jobs:
         env:
           API_KEY_WEATHERSOURCE: ${{ secrets.API_KEY_WEATHERSOURCE }}
           WEATHERSOURCE_FORECAST_URL: ${{ secrets.WEATHERSOURCE_FORECAST_URL }}
-        run: python Ontario_hourly_forecat_weatherbit.py
+        run: python Ontario_hourly_forecast_WeatherNetWork.py
+
+      - name: Commit and push forecast CSV
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+          git pull origin main
+          git add WeatherNetwork_forecast.csv
+          git commit -m "📈 Add forecast results - $(date '+%Y-%m-%d %H:%M:%S')" || echo "No changes to commit"
+          git push origin main
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        continue-on-error: true
