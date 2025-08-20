@@ -1,0 +1,29 @@
+name: Run Accuweather Script Hourly
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # runs every hour
+  workflow_dispatch:      # allows manual trigger
+
+jobs:
+  run-weatherbit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install pandas requests python-dotenv
+
+      - name: Run Ontario_hourly_forecat_Accuweather.py
+        env:
+          API_KEY_FORECAST_ACCUWEATHER_HOURLY: ${{ secrets.API_KEY_FORECAST_ACCUWEATHER_HOURLY }}
+          ACCUWEATHER_FORECAST_URL_HOURLY: ${{ secrets.ACCUWEATHER_FORECAST_URL_HOURLY }}
+          ACCUWEATHER_LOCATION_URL: ${{ secrets.ACCUWEATHER_LOCATION_URL }}
+        run: python Ontario_hourly_forecat_weatherbit.py
