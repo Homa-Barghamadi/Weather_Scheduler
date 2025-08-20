@@ -25,6 +25,7 @@
 import pandas as pd
 import requests
 import logging
+import os
 from constants import API_KEY_FORECAST_WEATHERBIT, WEATHERBIT_FORECAST_URL_HOURLY
 
 # Setup logging
@@ -60,8 +61,8 @@ def main():
             lon=TORONTO_DOWNTOWN["lon"]
         )
 
-        print(df.head())
-        df.to_csv("weather_forecast_toronto_downtown.csv", index=False)
+        df["fetched_at"] = pd.Timestamp.now()
+        df.to_csv("weatherbit_forecast.csv", mode='a', header=not os.path.exists("weatherbit_forecast.csv"), index=False)
         logger.info("✅ Saved forecast to weather_forecast_toronto_downtown.csv")
 
     except Exception as e:
