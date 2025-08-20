@@ -1,0 +1,28 @@
+name: Run WeatherNetWork Script Hourly
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # runs every hour
+  workflow_dispatch:      # allows manual trigger
+
+jobs:
+  run-weatherbit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: pip install pandas requests python-dotenv
+
+      - name: Run Ontario_hourly_forecast_WeatherNetWork.py
+        env:
+          API_KEY_WEATHERSOURCE: ${{ secrets.API_KEY_WEATHERSOURCE }}
+          WEATHERSOURCE_FORECAST_URL: ${{ secrets.WEATHERSOURCE_FORECAST_URL }}
+        run: python Ontario_hourly_forecat_weatherbit.py
