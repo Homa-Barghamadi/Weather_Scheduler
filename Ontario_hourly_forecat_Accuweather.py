@@ -105,8 +105,8 @@ def main():
         df = get_weather_forecast(API_KEY_FORECAST_ACCUWEATHER_HOURLY, DOWNTOWN_TORONTO)
 
         # Print and save
-        print(df.head())
-        df.to_csv("accuweather_forecast_toronto_downtown.csv", index=False)
+        df["fetched_at"] = pd.Timestamp.now()
+        df.to_csv("Accuweather_forecast.csv", mode='a', header=not os.path.exists("Accuweather_forecast.csv"), index=False)
         logger.info("✅ Saved forecast to accuweather_forecast_toronto_downtown.csv")
     except Exception as e:
         logger.error(f"❌ Failed to fetch forecast: {e}", exc_info=True)
