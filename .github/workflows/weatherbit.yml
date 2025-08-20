@@ -26,3 +26,15 @@ jobs:
           API_KEY_FORECAST_WEATHERBIT: ${{ secrets.API_KEY_FORECAST_WEATHERBIT }}
           WEATHERBIT_FORECAST_URL_HOURLY: ${{ secrets.WEATHERBIT_FORECAST_URL_HOURLY }}
         run: python Ontario_hourly_forecat_weatherbit.py
+
+      - name: Save forecast to repo
+        run: |
+          git config --global user.name "${{ github.actor }}"
+          git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+          git pull origin main
+          git add weatherbit_forecast.csv
+          git commit -m "Add forecast results - $(date)"
+          git push origin main
+        env:
+          GH_PAT: ${{ secrets.GH_PAT }}
+        continue-on-error: true
