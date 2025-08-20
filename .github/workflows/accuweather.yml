@@ -1,8 +1,10 @@
+# This is a scheduled GitHub Actions workflow
+
 name: Run Accuweather Script Hourly
 
 on:
   schedule:
-    - cron: '0 * * * *'  # runs every hour
+    - cron: '5 * * * *'  # runs every hour
   workflow_dispatch:      # allows manual trigger
 
 jobs:
