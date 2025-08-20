@@ -104,6 +104,7 @@
 
 import logging
 import requests
+import os
 import pandas as pd
 
 from constants import API_KEY_WEATHERSOURCE, WEATHERSOURCE_FORECAST_URL
@@ -163,8 +164,8 @@ def main():
         ordered_cols = ["zone", "city_name"] + [c for c in df.columns if c not in ("zone", "city_name")]
         df = df[ordered_cols]
 
-        print(df.head())
-        df.to_csv("weather_forecast_toronto_downtown.csv", index=False)
+        df["fetched_at"] = pd.Timestamp.now()
+        df.to_csv("WeatherNetwork_forecast.csv", mode='a', header=not os.path.exists("WeatherNetwork_forecast.csv"), index=False)
         logger.info("✅ Saved forecast to weather_forecast_toronto_downtown.csv")
     except Exception as e:
         logger.error("❌ Could not fetch forecast for Toronto downtown: %s", e)
