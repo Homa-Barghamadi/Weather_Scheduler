@@ -51,6 +51,7 @@
 import pandas as pd
 import requests
 import logging
+import os
 from constants import API_KEY_FORECAST_ACCUWEATHER_HOURLY, ACCUWEATHER_FORECAST_URL_HOURLY, ACCUWEATHER_LOCATION_URL
 
 # Setup logging
