@@ -1,8 +1,6 @@
 name: Run WeatherNetWork Script Hourly
 
 on:
-  schedule:
-    - cron: '0 * * * *'  # runs every hour
   workflow_dispatch:      # allows manual trigger
 
 jobs:
